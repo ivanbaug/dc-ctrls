@@ -1,3 +1,4 @@
+import os
 from flask import(Blueprint,
                   redirect,
                   render_template,
@@ -23,7 +24,7 @@ def profile():
 @main.route('/man-dev')
 @login_required
 def manage_devices():
-    return render_template("managedevices.html")
+    return render_template("managedevices.html", info_email=os.environ.get('INFO_EMAIL'))
 
 
 @main.route('/about')
