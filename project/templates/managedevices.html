@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 
 {% block content %}
@@ -17,12 +16,70 @@
   </nav>
 
   <!-- Page Content -->
-  <div id="content-manage" >
-      <!-- We'll fill this with dummy content -->
-      <p>Report your issues to the following email: {{info_email}}</p>
-  </div>
+  <br>
 
-</div>  
+
+  <br>
+  <div id="content-manage">
+    <div class="card mx-auto" style="max-width: 30rem;">
+      <div class="card-header text-white text-center">
+        <strong>New Device</strong>
+      </div>
+      <div class="card-body">
+        <form method="POST" action="/man-dev">
+          {{ form.csrf_token }}
+          <div class="form-group">
+            <label>{{form.name.label}}</label>
+            {{ form.name(class='form-control', placeholder='Device Name') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.dev_type.label}}</label>
+            {{ form.dev_type(class='form-control') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.di.label}}</label>
+            {{ form.di(class='form-control', type='number') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.ai.label}}</label>
+            {{ form.ai(class='form-control') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.ui.label}}</label>
+            {{ form.ui(class='form-control') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.do.label}}</label>
+            {{ form.do(class='form-control') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.ao.label}}</label>
+            {{ form.ao(class='form-control') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.co.label}}</label>
+            {{ form.co(class='form-control') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.has_clock.label}}</label>
+            {{ form.has_clock(class='form-control') }}
+          </div>
+          <div class="form-group">
+            <label>{{form.price.label}}</label>
+            {{ form.price(class='form-control') }}
+          </div>
+          <div class="float-right">
+            {{ form.submit(class='btn btn-success') }}
+          </div>
+        </form>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- We'll fill this with dummy content -->
+  <p>Report your issues to the following email: {{info_email}}</p>
+</div>
 
 <script src="/static/sidebar.js" defer></script>
 

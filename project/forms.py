@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField, IntegerField, BooleanField, SelectField
 from wtforms.validators import DataRequired, Email, URL, EqualTo, InputRequired
-from wtforms.fields.html5 import EmailField
+from wtforms.fields.html5 import DecimalField, EmailField
 
 
 class NewUserForm(FlaskForm):
@@ -37,4 +37,6 @@ class NewDeviceForm(FlaskForm):
     ao = IntegerField("Analog Outputs:", default=0)
     co = IntegerField("Configurable Outputs:", default=0)
     has_clock = SelectField("Has internal clock/schedule?",
-                            choices=[(True, 'Yes'), (False, 'No')], default=True)
+                            choices=[(True, 'Yes'), (False, 'No')], default=False)
+    price = DecimalField("Price: ", places=2, validators=[DataRequired()])
+    submit = SubmitField("Save new device")

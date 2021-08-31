@@ -1,4 +1,5 @@
 import os
+from project.forms import NewDeviceForm
 from flask import(Blueprint,
                   redirect,
                   render_template,
@@ -21,10 +22,13 @@ def profile():
     return render_template("profile.html", name=current_user.name)
 
 
-@main.route('/man-dev')
+@main.route('/man-dev', methods=['GET', 'POST'])
 @login_required
 def manage_devices():
-    return render_template("managedevices.html", info_email=os.environ.get('INFO_EMAIL'))
+    new_device_form = NewDeviceForm()
+    if new_device_form.validate_on_submit():
+        pass
+    return render_template("managedevices.html", info_email=os.environ.get('INFO_EMAIL'), form=new_device_form)
 
 
 @main.route('/about')
