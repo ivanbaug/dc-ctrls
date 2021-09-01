@@ -25,7 +25,7 @@
               <li class="nav-item">
                 <a class="nav-link d-sm-flex align-items-sm-center" href="{{ url_for('main.profile') }}">
                     <i class="bi bi-person-circle" style="font-size: 1.3rem; color: rgb(216, 216, 216);"></i>
-                  <div class="ml-2">Profile</div>
+                  <div class="ml-2">{{current_user.name}}'s Profile</div>
                 </a>   
               </li>
               {% endif %}

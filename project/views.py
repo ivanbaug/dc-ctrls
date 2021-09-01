@@ -7,8 +7,11 @@ from flask import(Blueprint,
                   url_for,
                   flash)
 from flask_login import login_required, current_user
+from datetime import datetime
 
 main = Blueprint('main', __name__)
+
+INFO_EMAIL = os.environ.get('INFO_EMAIL')
 
 
 @main.route('/')
@@ -19,7 +22,7 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template("profile.html", name=current_user.name)
+    return render_template("profile.html")
 
 
 @main.route('/man-dev', methods=['GET', 'POST'])
@@ -28,10 +31,10 @@ def manage_devices():
     new_device_form = NewDeviceForm()
     if new_device_form.validate_on_submit():
         pass
-    return render_template("managedevices.html", info_email=os.environ.get('INFO_EMAIL'), form=new_device_form)
+    return render_template("managedevices.html", info_email=INFO_EMAIL, form=new_device_form)
 
 
 @main.route('/about')
 @login_required
 def about():
-    return render_template("about.html")
+    return render_template("about.html", info_email=INFO_EMAIL)
