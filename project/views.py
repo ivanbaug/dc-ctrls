@@ -32,9 +32,20 @@ def profile():
 @main.route('/man-dev', methods=['GET', 'POST'])
 @login_required
 def manage_devices():
+    devices = Device.query.all()
+    # devices = []
+
+    return render_template("managedevices.html", info_email=INFO_EMAIL, devices=devices)
+
+
+@main.route('/new-dev', methods=['GET', 'POST'])
+@login_required
+def add_device():
     new_device_form = NewDeviceForm()
     # TODO:handle devices with same name
     if new_device_form.validate_on_submit():
+
+        print('this was a post request')
         new_device = Device(
             name=new_device_form.name.data,
             dev_type=new_device_form.dev_type.data,
@@ -48,18 +59,17 @@ def manage_devices():
             price=new_device_form.price.data,
             date_created=datetime.now(tz=tz),
             date_modified=datetime.now(tz=tz),
-            # date_created=datetime.strftime(
-            #     datetime.now(tz=tz), '%Y-%m-%d %H:%M:%S'),
-            # date_modified=datetime.strftime(
-            #     datetime.now(tz=tz), '%Y-%m-%d %H:%M:%S'),
             user_created=current_user.name,
             user_modified=current_user.name,
         )
-        print('trying to create a new device')
+        print('generated new device, trying toadd')
+        # print('trying to create a new device')
         db.session.add(new_device)
         db.session.commit()
+        print('this should be enough, it should have committed')
         return redirect(url_for('main.about'))
-    return render_template("managedevices.html", info_email=INFO_EMAIL, form=new_device_form)
+    print('this was a get request')
+    return render_template("newdevice.html", info_email=INFO_EMAIL, form=new_device_form)
 
 
 @main.route('/about')

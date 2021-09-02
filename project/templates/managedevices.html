@@ -21,60 +21,43 @@
 
   <br>
   <div id="content-manage">
-    <div class="card mx-auto" style="max-width: 30rem;">
-      <div class="card-header text-white text-center">
-        <strong>New Device</strong>
-      </div>
-      <div class="card-body">
-        <form method="POST" action="/man-dev">
-          {{ form.csrf_token }}
-          <div class="form-group">
-            <label>{{form.name.label}}</label>
-            {{ form.name(class='form-control', placeholder='Device Name') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.dev_type.label}}</label>
-            {{ form.dev_type(class='form-control') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.di.label}}</label>
-            {{ form.di(class='form-control', type='number') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.ai.label}}</label>
-            {{ form.ai(class='form-control', type='number') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.ui.label}}</label>
-            {{ form.ui(class='form-control', type='number') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.do.label}}</label>
-            {{ form.do(class='form-control', type='number') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.ao.label}}</label>
-            {{ form.ao(class='form-control', type='number') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.co.label}}</label>
-            {{ form.co(class='form-control', type='number') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.has_clock.label}}</label>
-            {{ form.has_clock(class='form-control') }}
-          </div>
-          <div class="form-group">
-            <label>{{form.price.label}}</label>
-            {{ form.price(class='form-control') }}
-          </div>
-          <div class="float-right">
-            {{ form.submit(class='btn btn-success') }}
-          </div>
-        </form>
 
-      </div>
-    </div>
+    {% if devices %}
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th scope="col">NAME</th>
+          <th scope="col">DI</th>
+          <th scope="col">AI</th>
+          <th scope="col">UI</th>
+          <th scope="col">DO</th>
+          <th scope="col">AO</th>
+          <th scope="col">CO</th>
+          <th scope="col">SCH</th>
+          <th scope="col">TYPE</th>
+          <th scope="col">MODIFIED BY</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in devices %}
+        <tr>
+          <th scope="row">{{d.name}}</th>
+          <td>{{d.di}}</td>
+          <td>{{d.ai}}</td>
+          <td>{{d.ui}}</td>
+          <td>{{d.do}}</td>
+          <td>{{d.ao}}</td>
+          <td>{{d.co}}</td>
+          <td>{{d.has_clock}}</td>
+          <td>{{d.dev_type}}</td>
+          <td>{{d.user_modified}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>there are no devices registered yet </p>
+    {% endif %}
 
   </div>
   <!-- We'll fill this with dummy content -->
