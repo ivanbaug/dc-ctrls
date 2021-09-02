@@ -37,6 +37,8 @@ class NewDeviceForm(FlaskForm):
     ao = IntegerField("Analog Outputs:", default=0)
     co = IntegerField("Configurable Outputs:", default=0)
     has_clock = SelectField("Has internal clock/schedule?",
-                            choices=[(True, 'Yes'), (False, 'No')], default=False)
+                            choices=[('True', 'Yes'), ('False', 'No')],
+                            default=False,
+                            coerce=lambda x: x == 'True')
     price = DecimalField("Price: ", places=2, validators=[DataRequired()])
     submit = SubmitField("Save new device")

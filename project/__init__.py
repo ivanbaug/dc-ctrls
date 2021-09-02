@@ -21,7 +21,9 @@ def create_app(config_file='config.py'):
     login_manager.login_view = 'auth.login'
     login_manager.init_app(app)
 
+    # Import db models
     from .models import User
+    from .models import Device
 
     ### 2 Lines below only required once, when creating DB. ####
     # with app.app_context():
