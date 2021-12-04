@@ -67,7 +67,7 @@ def add_device():
         db.session.add(new_device)
         db.session.commit()
         print('this should be enough, it should have committed')
-        return redirect(url_for('main.about'))
+        return redirect(url_for('main.manage_devices'))
     print('this was a get request')
     return render_template("newdevice.html", info_email=INFO_EMAIL, form=new_device_form)
 
@@ -85,3 +85,36 @@ def delete_device(device_id):
     db.session.delete(device_to_delete)
     db.session.commit()
     return redirect(url_for('main.manage_devices'))
+
+
+# TODO: Implement the following to display the devices
+
+# def listPossibleCtrls(req,ctrl_sol_list,ctrls,exs):
+#     #req : requirements
+#     #ctrl_sol_list : list of controller solutions
+#     #ctrls : general list of available controller objects
+#     #exs : general list of available expansion module objects
+#     main_list=[]
+#     for c in ctrl_sol_list:
+#         solution_list=[c.cost]
+
+#         used_io, total_remaining, required = getUsedIO(req,c.io_list)
+
+#         cne_strings = c.name_array #Stands for controllers and expansion string list
+
+#         controller = objectByName(ctrls,cne_strings[0])
+#         used, remaining, required = getUsedIO(req,controller.io_list)
+
+#         cdict = createModuleDict(controller.name, used)
+#         solution_list.append(cdict)
+
+#         for e in cne_strings[1:]:
+#             expansion = objectByName(exs,e)
+#             used, remaining, required = getUsedIO(required,expansion.io_list)
+#             edict = createModuleDict(expansion.name, used)
+#             solution_list.append(edict)
+#         rem_dict = createModuleDict("Available", total_remaining)
+#         solution_list.append(rem_dict)
+#         main_list.append(solution_list)
+
+#     return main_list

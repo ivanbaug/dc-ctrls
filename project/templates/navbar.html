@@ -1,0 +1,43 @@
+<nav class="navbar navbar-expand-sm navbar-dark navbar-custom navbar-fixed-top">
+  <a class="navbar-brand" href="{{ url_for('main.index') }}">Ivan B Ctrl Estimate </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto ">
+
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="{{ url_for('main.profile') }}">
+          <i class="bi bi-person-circle" style="font-size: 1.3rem; color: rgb(216, 216, 216);"></i>
+          <div class="ml-2">{{current_user.name}}'s Profile</div>
+        </a>
+      </li>
+      {% endif %}
+      {% if not current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="{{ url_for('auth.login') }}">
+          <i class="bi bi-person-circle" style="font-size: 1.3rem; color: rgb(216, 216, 216);"></i>
+          <div class="ml-2">Login</div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="{{ url_for('auth.signup') }}">
+          <i class="bi bi-person-plus-fill" style="font-size: 1.3rem; color: rgb(216, 216, 216);"></i>
+          <div class="ml-2">Signup</div>
+        </a>
+      </li>
+      {% endif %}
+      {% if current_user.is_authenticated %}
+      <li class="nav-item">
+        <a class="nav-link d-flex align-items-center" href="{{ url_for('auth.logout') }}">
+          <i class="bi bi-door-closed-fill" style="font-size: 1.3rem; color: rgb(216, 216, 216);"></i>
+          <div class="ml-2">Logout</div>
+        </a>
+      </li>
+      {% endif %}
+
+    </ul>
+  </div>
+</nav>

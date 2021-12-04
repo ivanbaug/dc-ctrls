@@ -237,3 +237,5 @@ cython_debug/
 db.sqlite
 notes.txt
 runme.sh
+test.py
+test.json
