@@ -11,6 +11,7 @@ from flask_login import login_required, current_user
 from datetime import datetime
 from pytz import timezone
 from . import db
+from .prj_requests import select_from_all
 
 main = Blueprint('main', __name__)
 
@@ -18,8 +19,19 @@ tz = timezone("America/Lima")
 INFO_EMAIL = os.environ.get('INFO_EMAIL')
 
 
-@main.route('/')
+@main.route('/', methods=['GET', 'POST'])
 def index():
+    if request.method == 'POST':
+        try:
+            req_di = int(request.form['di'])
+            req_ai = int(request.form['ai'])
+            req_do = int(request.form['do'])
+            req_ao = int(request.form['ao'])
+        except Exception as e:
+            msg = "One or more of your inputs are not a number between 0 and 128"
+        else:
+            select_from_all(req_di, req_ai, req_do, req_ao)
+
     return render_template("index.html")
 
 

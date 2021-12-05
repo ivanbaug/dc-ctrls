@@ -1,12 +1,12 @@
-
 {% extends "base.html" %}
 
 {% block content %}
 
-  <br>
+<br>
+<form action="{{url_for('main.index')}}" method="post">
   <div class="card mx-auto" style="max-width: 30rem; min-width: 20rem;">
     <div class="card-header text-white text-center">
-      <strong>REQUIRED I/O's</strong> 
+      <strong>REQUIRED I/O's</strong>
     </div>
     <div class="card-body">
       <table class="table table-bordered">
@@ -20,18 +20,19 @@
         </thead>
         <tbody>
           <tr>
-            <td><input type="number" name="di" min="0" max="200" value=0></td>
-            <td><input type="number" name="ai" min="0" max="200" value=0></td>
-            <td><input type="number" name="do" min="0" max="200" value=0></td>
-            <td><input type="number" name="ao" min="0" max="200" value=0></td>
+            <td><input type="number" name="di" min="0" max="128" value=0></td>
+            <td><input type="number" name="ai" min="0" max="128" value=0></td>
+            <td><input type="number" name="do" min="0" max="128" value=0></td>
+            <td><input type="number" name="ao" min="0" max="128" value=0></td>
           </tr>
         </tbody>
-      </table>     
+      </table>
     </div>
   </div>
   <br>
   <div class="text-center">
-    <a href="#" class="btn btn-outline-info btn-lg">Enlighten me!</a>
+    <input type="submit" value="Enlighten me!" class="btn btn-outline-info btn-lg">
   </div>
 
+</form>
 {% endblock %}
