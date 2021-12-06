@@ -1,69 +1,71 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<br>
-<form action="{{url_for('main.index')}}" method="post" class="pt-5">
-  <div class="card mx-auto" style="max-width: 30rem; min-width: 20rem;">
-    <div class="card-header text-white text-center">
-      <strong>REQUIRED I/O's</strong>
-    </div>
-    <div class="card-body">
-      <div class="d-flex justify-content-around">
-        <div class="io-input-box px-2 text-center">
-          <p class="my-1"><b>di</b></p>
-          <input class="form-control " type="number" name="di" min="0" max="128" value=0 onClick="this.select();">
+<div class="d-flex justify-content-center">
+  <div class="single-cont-center flex-fill">
+    <!-- Main form -->
+    <form action="{{url_for('main.index')}}" method="post" class="pt-5 w-100">
+      <div class="card">
+        <div class="card-header text-white text-center">
+          <strong>REQUIRED I/O's</strong>
         </div>
-        <div class="io-input-box px-2 text-center">
-          <p class="my-1"><b>ai</b></p>
-          <input class="form-control " type="number" name="ai" min="0" max="128" value=0 onClick="this.select();">
-        </div>
-        <div class="io-input-box px-2 text-center">
-          <p class="my-1"><b>do</b></p>
-          <input class="form-control " type="number" name="do" min="0" max="128" value=0 onClick="this.select();">
-        </div>
-        <div class="io-input-box px-2 text-center">
-          <p class="my-1"><b>ao</b></p>
-          <input class="form-control " type="number" name="ao" min="0" max="128" value=0 onClick="this.select();">
+        <div class="card-body">
+          <div class="d-flex justify-content-around">
+            <div class="io-input-box px-2 text-center">
+              <p class="my-1"><b>di</b></p>
+              <input class="form-control " type="number" name="di" min="0" max="128" value=0 onClick="this.select();">
+            </div>
+            <div class="io-input-box px-2 text-center">
+              <p class="my-1"><b>ai</b></p>
+              <input class="form-control " type="number" name="ai" min="0" max="128" value=0 onClick="this.select();">
+            </div>
+            <div class="io-input-box px-2 text-center">
+              <p class="my-1"><b>do</b></p>
+              <input class="form-control " type="number" name="do" min="0" max="128" value=0 onClick="this.select();">
+            </div>
+            <div class="io-input-box px-2 text-center">
+              <p class="my-1"><b>ao</b></p>
+              <input class="form-control " type="number" name="ao" min="0" max="128" value=0 onClick="this.select();">
+            </div>
+          </div>
         </div>
       </div>
+      <div class="text-center my-3">
+        <input type="submit" value="Enlighten me!" class="btn btn-outline-info btn-lg">
+      </div>
+    </form>
+    {% if selected %}
+    <!-- Display results -->
+    <div class="alert alert-primary sticky-top" role="alert">
+      Results for: {{req_di}} di | {{req_ai}} ai | {{req_do}} do | {{req_ao}} ao
     </div>
+    {% endif %}
+    {% for sel in selected %}
+    <table class="table table-sm table-bordered mt-3 text-center">
+      <tr class="table-head-custom-bg">
+        <th class="text-left result-first-col">OP{{loop.index}}</th>
+        <th>di</th>
+        <th>ai</th>
+        <th>ui</th>
+        <th>do</th>
+        <th>ao</th>
+        <th>co</th>
+      </tr>
+      {% for m in sel['device_summary'] %}
+      <tr>
+        <td class="text-left result-first-col">{{m["name"]}}</td>
+        <td>{{m["di"] | string}}</td>
+        <td>{{m["ai"] | string}}</td>
+        <td>{{m["ui"] | string}}</td>
+        <td>{{m["do"] | string}}</td>
+        <td>{{m["ao"] | string}}</td>
+        <td>{{m["co"] | string}}</td>
+      </tr>
+      {% endfor %}
+
+    </table>
+
+    {% endfor %}
   </div>
-  <div class="text-center my-3">
-    <input type="submit" value="Enlighten me!" class="btn btn-outline-info btn-lg">
-  </div>
-</form>
-{% if selected %}
-<div class="alert alert-primary sticky-top" role="alert">
-  Required: 2 ai, 2di, 4eo, 2ue.
 </div>
-{% endif %}
-{% for sel in selected %}
-
-<table class="table table-sm table-bordered mx-auto mt-3" style="max-width: 30rem; min-width: 20rem;">
-  <tr>
-    <th>OP{{loop.index}}</th>
-    <th>di</th>
-    <th>ai</th>
-    <th>ui</th>
-    <th>do</th>
-    <th>ao</th>
-    <th>co</th>
-  </tr>
-  {% for m in sel['device_summary'] %}
-  <tr>
-    <td>{{m["name"]}}</td>
-    <td>{{m["di"] | string}}</td>
-    <td>{{m["ai"] | string}}</td>
-    <td>{{m["ui"] | string}}</td>
-    <td>{{m["do"] | string}}</td>
-    <td>{{m["ao"] | string}}</td>
-    <td>{{m["co"] | string}}</td>
-  </tr>
-  {% endfor %}
-
-</table>
-
-{% endfor %}
-
 {% endblock %}

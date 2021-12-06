@@ -282,3 +282,16 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
+.single-cont-center {
+  max-width: 30rem;
+  min-width: 20rem;
+}
+
+.result-first-col {
+  width: 110px;
+}
+
+.table-head-custom-bg {
+  background-color: lightgray;
+}

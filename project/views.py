@@ -26,7 +26,14 @@ def index():
             msg = "One or more of your inputs are not a number between 0 and 128"
         else:
             selected = select_from_all(req_di, req_ai, req_do, req_ao)
-            return render_template("index.html", selected=selected)
+            return render_template(
+                "index.html",
+                selected=selected,
+                req_di=req_di,
+                req_ai=req_ai,
+                req_do=req_do,
+                req_ao=req_ao,
+            )
 
     return render_template("index.html")
 
