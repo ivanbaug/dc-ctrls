@@ -20,7 +20,6 @@ def select_from_all(di: int = 0, ai: int = 0, do: int = 0, ao: int = 0):
             headers={"Content-Type": "application/json"},
             data=json.dumps({"di": di, "ai": ai, "do": do, "ao": ao}),
         )
-
         # If the response was successful, no Exception will be raised
         response.raise_for_status()
         req = [di, ai, do, ao]
@@ -62,7 +61,7 @@ def prove_io(required: int, base: int, universal: int) -> Tuple:
 
 
 def prove_device(req: list, device: list) -> Tuple:
-    """Returns used io, missing required and remaining io after fullfilling requirement."""
+    """Returns used io, missing required io and remaining io after fullfilling requirement."""
     # Requirement
     rDI = req[0]
     rAI = req[1]
@@ -168,4 +167,4 @@ def list_possible_ctrls(req, ctrl_sol_list, ddata):
 
 
 # print(devices_data['ctrls'][0])
-print(select_from_all(6, 2, 3, 3))
+# print(select_from_all(6, 2, 3, 3))

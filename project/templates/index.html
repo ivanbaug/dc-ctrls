@@ -33,6 +33,33 @@
   <div class="text-center">
     <input type="submit" value="Enlighten me!" class="btn btn-outline-info btn-lg">
   </div>
-
 </form>
+{% for sel in selected %}
+<br>
+<table class="table table-sm table-bordered mx-auto" style="max-width: 30rem; min-width: 20rem;">
+  <tr>
+    <th></th>
+    <th>di</th>
+    <th>ai</th>
+    <th>ui</th>
+    <th>do</th>
+    <th>ao</th>
+    <th>co</th>
+  </tr>
+  {% for m in sel['device_summary'] %}
+  <tr>
+    <td>{{m["name"]}}</td>
+    <td>{{m["di"] | string}}</td>
+    <td>{{m["ai"] | string}}</td>
+    <td>{{m["ui"] | string}}</td>
+    <td>{{m["do"] | string}}</td>
+    <td>{{m["ao"] | string}}</td>
+    <td>{{m["co"] | string}}</td>
+  </tr>
+  {% endfor %}
+
+</table>
+
+{% endfor %}
+
 {% endblock %}
