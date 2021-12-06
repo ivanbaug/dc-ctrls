@@ -1,7 +1,7 @@
-body,
+/* body,
 html {
   height: 100%;
-}
+} */
 
 /* The purpose of the main-cointainer is that 
    the sidebar goes to the bottom of the page 
@@ -261,4 +261,24 @@ ul ul a {
 
 hr.myhr {
   border-top: 1px solid #aaaaaa;
+}
+
+.io-input-box {
+  background-color: lightgray;
+  width: 4.5rem;
+  height: 5rem;
+  border-radius: 10%;
+}
+
+/* Remove spinners */
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

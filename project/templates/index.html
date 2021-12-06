@@ -3,42 +3,46 @@
 {% block content %}
 
 <br>
-<form action="{{url_for('main.index')}}" method="post">
+<form action="{{url_for('main.index')}}" method="post" class="pt-5">
   <div class="card mx-auto" style="max-width: 30rem; min-width: 20rem;">
     <div class="card-header text-white text-center">
       <strong>REQUIRED I/O's</strong>
     </div>
     <div class="card-body">
-      <table class="table table-bordered">
-        <thead>
-          <tr>
-            <th scope="col">di</th>
-            <th scope="col">ai</th>
-            <th scope="col">do</th>
-            <th scope="col">ao</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td><input type="number" name="di" min="0" max="128" value=0></td>
-            <td><input type="number" name="ai" min="0" max="128" value=0></td>
-            <td><input type="number" name="do" min="0" max="128" value=0></td>
-            <td><input type="number" name="ao" min="0" max="128" value=0></td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="d-flex justify-content-around">
+        <div class="io-input-box px-2 text-center">
+          <p class="my-1"><b>di</b></p>
+          <input class="form-control " type="number" name="di" min="0" max="128" value=0 onClick="this.select();">
+        </div>
+        <div class="io-input-box px-2 text-center">
+          <p class="my-1"><b>ai</b></p>
+          <input class="form-control " type="number" name="ai" min="0" max="128" value=0 onClick="this.select();">
+        </div>
+        <div class="io-input-box px-2 text-center">
+          <p class="my-1"><b>do</b></p>
+          <input class="form-control " type="number" name="do" min="0" max="128" value=0 onClick="this.select();">
+        </div>
+        <div class="io-input-box px-2 text-center">
+          <p class="my-1"><b>ao</b></p>
+          <input class="form-control " type="number" name="ao" min="0" max="128" value=0 onClick="this.select();">
+        </div>
+      </div>
     </div>
   </div>
-  <br>
-  <div class="text-center">
+  <div class="text-center my-3">
     <input type="submit" value="Enlighten me!" class="btn btn-outline-info btn-lg">
   </div>
 </form>
+{% if selected %}
+<div class="alert alert-primary sticky-top" role="alert">
+  Required: 2 ai, 2di, 4eo, 2ue.
+</div>
+{% endif %}
 {% for sel in selected %}
-<br>
-<table class="table table-sm table-bordered mx-auto" style="max-width: 30rem; min-width: 20rem;">
+
+<table class="table table-sm table-bordered mx-auto mt-3" style="max-width: 30rem; min-width: 20rem;">
   <tr>
-    <th></th>
+    <th>OP{{loop.index}}</th>
     <th>di</th>
     <th>ai</th>
     <th>ui</th>
