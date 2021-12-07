@@ -7,18 +7,15 @@ import os
 db = SQLAlchemy()
 
 
-def create_app(config_file='config.py'):
+def create_app(config_file="config.py"):
     app = Flask(__name__)
-    # app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False #Removes the warning but should check what it means in the future
-    # app.config['SECRET_KEY'] = os.getenv("APP_KEY")
-    # app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DB_URI')
 
     app.config.from_pyfile(config_file)
 
     db.init_app(app)
 
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = "auth.login"
     login_manager.init_app(app)
 
     # Import db models
@@ -36,10 +33,12 @@ def create_app(config_file='config.py'):
 
     # blueprint for auth routes in our app
     from .auth import auth as auth_blueprint
+
     app.register_blueprint(auth_blueprint)
 
     # blueprint for non-auth parts of app
     from .views import main as main_blueprint
+
     app.register_blueprint(main_blueprint)
 
     return app

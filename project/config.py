@@ -2,7 +2,7 @@ import os
 from dotenv import load_dotenv
 
 # Loads environment variables from file
-load_dotenv('.env')  # Comment after testing
+load_dotenv(".env")  # Comment after testing
 
 # Statement for enabling the development environment
 DEBUG = True
@@ -13,7 +13,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # Define the database - we are working with
 # SQLite for this example
 # SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
-SQLALCHEMY_DATABASE_URI = os.environ.get('DB_URI')
+SQLALCHEMY_DATABASE_URI = os.environ.get("DB_URI")
 DATABASE_CONNECT_OPTIONS = {}
 
 # Application threads. A common general assumption is
@@ -27,7 +27,12 @@ CSRF_ENABLED = True
 
 # Use a secure, unique and absolutely secret key for
 # signing the data.
-CSRF_SESSION_KEY = os.environ.get('CSRF_KEY')
+CSRF_SESSION_KEY = os.environ.get("CSRF_KEY")
 
 # Secret key for signing cookies
-SECRET_KEY = os.environ.get('APP_KEY')
+SECRET_KEY = os.environ.get("APP_KEY")
+
+# Recaptcha config for site registration
+RECAPTCHA_PUBLIC_KEY = os.environ.get("RECAPTCHA_PUB_KEY")
+RECAPTCHA_PRIVATE_KEY = os.environ.get("RECAPTCHA_SECRET_KEY")
+TESTING = False

@@ -1,23 +1,23 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <br>
-
-  <div class="card mx-auto" style="max-width: 30rem;">
-    <div class="card-header text-white text-center">
-      <strong>User details</strong>
-    </div>
-    <div class="card-body">
-      {% with messages = get_flashed_messages() %}
-      {% if messages %}
+<div class="d-flex justify-content-center">
+  <div class="single-cont-center flex-fill">
+    <div class="card mt-5">
+      <div class="card-header text-white text-center">
+        <strong>USER DETAILS</strong>
+      </div>
+      <div class="card-body">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
         {% for message in messages %}
         <div class="alert alert-danger" role="alert">
-        {{ message }}
+          {{ message }}
         </div>
-        {% endfor %} 
-      {% endif %}
-      {% endwith %}
-      <form method="POST" action="/login">
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        <form method="POST" action="/login">
           {{ form.csrf_token }}
           <div class="form-group">
             {{ form.email(class='form-control', placeholder='Your e-mail') }}
@@ -31,9 +31,11 @@
           </div>
           <div class="float-right">
             {{ form.submit(class='btn btn-success') }}
-          </div>    
-      </form>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  
+</div>
+
 {% endblock %}

@@ -77,7 +77,7 @@ def add_device():
             user_created=current_user.name,
             user_modified=current_user.name,
         )
-        print("generated new device, trying toadd")
+        print("generated new device, trying to add")
         # print('trying to create a new device')
         db.session.add(new_device)
         db.session.commit()
