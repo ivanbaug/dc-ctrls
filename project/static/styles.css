@@ -63,6 +63,10 @@ html {
   background-color: #006699 !important;
 }
 
+.card-header-exp {
+  background-color: #6c757d !important;
+}
+
 table td {
   position: relative;
 }

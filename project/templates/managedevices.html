@@ -1,86 +1,59 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div class="wrapper">
-
-  <!-- Sidebar -->
-  <nav id="sidebar">
-    <div class="custom-menu">
-      <button type="button" id="sidebarCollapse" class="btn btn-primary">
-        <i class="bi bi-list"></i>
-        <span class="sr-only">Toggle Menu</span>
-      </button>
-    </div>
-    {% include "sidebar.html" %}
-  </nav>
-
-  <!-- Page Content -->
-  <br>
-
-
-  <br>
-  <div id="content-manage">
-
-    {% if devices %}
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th scope="col">NAME</th>
-          <th scope="col">DI</th>
-          <th scope="col">AI</th>
-          <th scope="col">UI</th>
-          <th scope="col">DO</th>
-          <th scope="col">AO</th>
-          <th scope="col">CO</th>
-          <th scope="col">SCH</th>
-          <th scope="col">TYPE</th>
-          <th scope="col">MODIFIED BY</th>
-          <th scope="col">OPTIONS</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for d in devices %}
-        <tr>
-          <th scope="row">{{d.name}}</th>
-          <td>{{d.di}}</td>
-          <td>{{d.ai}}</td>
-          <td>{{d.ui}}</td>
-          <td>{{d.do}}</td>
-          <td>{{d.ao}}</td>
-          <td>{{d.co}}</td>
-          <td>{{d.has_clock}}</td>
-          <td>{{d.dev_type}}</td>
-          <td>{{d.user_modified}}</td>
-          <td>
-            <a href="{{url_for('main.delete_device', device_id=d.id) }}">
-              <button class="btn btn-secondary" type="button">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash"
-                  viewBox="0 0 16 16">
-                  <path
-                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
-                  <path fill-rule="evenodd"
-                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
-                </svg>
-              </button>
-            </a>
-
-
-
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
-    {% else %}
-    <p>there are no devices registered yet </p>
+<div class="d-flex justify-content-center">
+  <div class="single-cont-center flex-fill">
+    <h3 class="py-3">Device list</h3>
+    {% if not devices %}
+    <hr>
+    <h4>There are no devices registered yet</h4>
     {% endif %}
-
+    {% for d in devices %}
+    <!-- TODO: implement modal for edit and delete forms/actions -->
+    <div class="card my-3">
+      <div class="card-header text-white text-center d-flex {{'card-header-exp' if d.dev_type == 'expansion'}}">
+        <div class="mr-auto"><strong>{{d.name}}</strong></div>
+        <!-- Price is optional -->
+        {% if current_user.show_prices %}
+        <div class="mx-2">Price: ${{d.price | int}}</div>
+        {% endif %}
+        <div class="mx-2">{{d.dev_type}}</div>
+        {% if d.has_clock %}
+        <div class="mx-2"><i class="bi bi-clock"></i></div>
+        {% endif %}
+      </div>
+      <div class="container">
+        <div class="row border py-1">
+          <div class="col border-right">
+            DI: {{d.di}}
+          </div>
+          <div class="col border-right">
+            AI: {{d.ai}}
+          </div>
+          <div class="col">
+            UI: {{d.ui}}
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row border py-1">
+          <div class="col border-right">
+            DO: {{d.do}}
+          </div>
+          <div class="col border-right">
+            AO: {{d.ao}}
+          </div>
+          <div class="col">
+            CO: {{d.co}}
+          </div>
+        </div>
+      </div>
+      <div class="btn-group " role="group" aria-label="Second group">
+        <button type="button" class="btn btn-outline-success btn-sm"><i class="bi bi-pencil mx-2"></i>Edit</button>
+        <button type="button" class="btn btn-outline-danger btn-sm"> <i class="bi bi-trash mx-2"></i>Delete</button>
+      </div>
+    </div>
+    {% endfor %}
   </div>
-  <!-- We'll fill this with dummy content -->
-  <p>Report your issues to the following email: {{info_email}}</p>
 </div>
-
-<script src="/static/sidebar.js" defer></script>
-
 {% endblock %}

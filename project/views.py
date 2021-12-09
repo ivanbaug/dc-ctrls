@@ -111,7 +111,7 @@ def toggle_price():
     if user:
         user.show_prices = not user.show_prices
         db.session.commit()
-        return jsonify(response={"success": "Sucessfully updated price display."}), 200
+        return jsonify(response={"Success": "Sucessfully updated price display."}), 200
     else:
         return (
             jsonify(error={"Not Found": "Sorry, we don't have a user with that id."}),
