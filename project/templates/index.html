@@ -13,19 +13,23 @@
           <div class="d-flex justify-content-around">
             <div class="io-input-box px-2 text-center">
               <p class="my-1"><b>di</b></p>
-              <input class="form-control " type="number" name="di" min="0" max="128" value=0 onClick="this.select();">
+              <input class="form-control " type="number" name="di" min="0" max="128" value={{req_di if req_di else 0}}
+                onClick="this.select();">
             </div>
             <div class="io-input-box px-2 text-center">
               <p class="my-1"><b>ai</b></p>
-              <input class="form-control " type="number" name="ai" min="0" max="128" value=0 onClick="this.select();">
+              <input class="form-control " type="number" name="ai" min="0" max="128" value={{req_ai if req_ai else 0}}
+                onClick="this.select();">
             </div>
             <div class="io-input-box px-2 text-center">
               <p class="my-1"><b>do</b></p>
-              <input class="form-control " type="number" name="do" min="0" max="128" value=0 onClick="this.select();">
+              <input class="form-control " type="number" name="do" min="0" max="128" value={{req_do if req_do else 0}}
+                onClick="this.select();">
             </div>
             <div class="io-input-box px-2 text-center">
               <p class="my-1"><b>ao</b></p>
-              <input class="form-control " type="number" name="ao" min="0" max="128" value=0 onClick="this.select();">
+              <input class="form-control " type="number" name="ao" min="0" max="128" value={{req_ao if req_ao else 0}}
+                onClick="this.select();">
             </div>
           </div>
         </div>
@@ -62,7 +66,9 @@
         <td>{{m["co"] | string}}</td>
       </tr>
       {% endfor %}
-
+      {% if current_user.is_authenticated and current_user.show_prices %}
+      <caption class="mx-2 pt-1">Price: ${{sel['cost']}}</caption>
+      {% endif %}
     </table>
 
     {% endfor %}
