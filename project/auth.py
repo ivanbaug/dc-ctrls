@@ -10,8 +10,6 @@ from . import db
 
 auth = Blueprint("auth", __name__)
 
-# TODO: make flashes work
-
 
 @auth.route("/login", methods=["GET", "POST"])
 def login():
@@ -62,13 +60,12 @@ def signup():
 
         # Logging in right after registering so the user can access the
         # full page
-
         login_user(new_user)
 
         return redirect(url_for("main.index"))
     if request.method == "POST":
         # Send flash messsage
-        flash("Error, check the submitted data, did you confirmed your password?")
+        flash("Error, check the submitted data, did you confirm your password?")
     return render_template(
         "signup.html", info_email=os.environ.get("INFO_EMAIL"), form=nform
     )

@@ -1,7 +1,6 @@
 import os
+import requests, json
 from typing import Tuple
-import requests
-import json
 from requests.exceptions import HTTPError
 from dotenv import load_dotenv
 
@@ -9,6 +8,7 @@ from dotenv import load_dotenv
 load_dotenv(".env")
 API_SELECT_URL = os.environ.get("API_SELECT_URL")
 
+# TODO: This will become a DB search
 with open("project\\test.json", "r") as f:
     devices_data = json.load(f)
 
@@ -57,11 +57,8 @@ def prove_io(required: int, base: int, universal: int) -> Tuple:
     return (required, base, universal)
 
 
-# TODO: Implement the following to display the devices
-
-
 def prove_device(req: list, device: list) -> Tuple:
-    """Returns used io, missing required io and remaining io after fullfilling requirement."""
+    """Returns used io, missing required io and remaining io after meeting requirements."""
     # Requirement
     rDI = req[0]
     rAI = req[1]
@@ -90,6 +87,7 @@ def prove_device(req: list, device: list) -> Tuple:
 
 
 def create_module_dict(name, used_io):
+    """Returns dictionary containing relevant data"""
     m_dict = {}
     m_dict["name"] = name
     m_dict["di"] = used_io[0]
@@ -102,10 +100,12 @@ def create_module_dict(name, used_io):
 
 
 def list_possible_ctrls(req, ctrl_sol_list, ddata):
-    # req : requirements
-    # ctrl_sol_list : list of controller selections
-    # ctrls : general list of available controller objects
-    # exs : general list of available expansion module objects
+    """Returns a list containing all the selected combinations of devices that meet the requirements.
+    req : requirements
+    ctrl_sol_list : list of controller selections
+    ddata : general list of available controller objects
+    """
+
     main_list = []
     ctrls = ddata["ctrls"]
     exs = ddata["exps"]

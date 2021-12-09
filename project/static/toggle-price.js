@@ -5,10 +5,10 @@ price_switch.addEventListener('change', togglePriceDisplay)
 function togglePriceDisplay(){
 
   if (price_switch.checked){
-    console.log('toggle on')
+    console.log('toggle price display on')
   }
   else{
-    console.log('toggle off')
+    console.log('toggle price display off')
   }
   fetch("/toggle-price-display", {method:'PATCH'})
     .then(response => response.json())
@@ -19,4 +19,3 @@ function togglePriceDisplay(){
       console.error('Error:', error);
     });
 }
-

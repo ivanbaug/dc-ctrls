@@ -1,4 +1,4 @@
-from flask_wtf import FlaskForm, recaptcha
+from flask_wtf import FlaskForm
 from flask_wtf.recaptcha.fields import RecaptchaField
 from wtforms import (
     StringField,
@@ -8,7 +8,7 @@ from wtforms import (
     BooleanField,
     SelectField,
 )
-from wtforms.validators import DataRequired, Email, URL, EqualTo, InputRequired
+from wtforms.validators import DataRequired, Email, EqualTo, InputRequired
 from wtforms.fields.html5 import DecimalField, EmailField
 
 
@@ -47,8 +47,8 @@ class NewDeviceForm(FlaskForm):
         choices=[
             ("controller", "Controller"),
             ("expansion", "Expansion Module"),
-            ("thermostat", "Thermostat"),
-            ("other", "Other"),
+            # ("thermostat", "Thermostat"),
+            # ("other", "Other"),
         ],
         default="controller",
     )

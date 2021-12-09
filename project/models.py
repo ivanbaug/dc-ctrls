@@ -12,8 +12,6 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(100), unique=True)
     password = db.Column(db.String(100))
     name = db.Column(db.String(250))
-    # TODO: create show prices column to save if
-    # the user wants to show the prices during his session.
     show_prices = db.Column(db.Boolean, default=False)
     device_options = db.Column(JSON)
     has_privileges = db.Column(db.Boolean, default=False)
@@ -38,4 +36,4 @@ class Device(db.Model):
     # TODO: Create relation with the user that created it, may not be neccesary
     user_created = db.Column(db.String(250))
     user_modified = db.Column(db.String(250))
-    is_default = db.Column(db.Boolean)
+    is_default = db.Column(db.Boolean, default=True)

@@ -10,6 +10,7 @@ from .prj_requests import select_from_all
 
 main = Blueprint("main", __name__)
 
+# TODO: Improve timezone handling
 tz = timezone("America/Lima")
 INFO_EMAIL = os.environ.get("INFO_EMAIL")
 
@@ -101,19 +102,3 @@ def delete_device(device_id):
     db.session.delete(device_to_delete)
     db.session.commit()
     return redirect(url_for("main.manage_devices"))
-
-
-# TODO: make this available for privileged users only
-@main.route("/toggle-price-display", methods=["PATCH"])
-@login_required
-def toggle_price():
-    user = User.query.get(current_user.id)
-    if user:
-        user.show_prices = not user.show_prices
-        db.session.commit()
-        return jsonify(response={"Success": "Sucessfully updated price display."}), 200
-    else:
-        return (
-            jsonify(error={"Not Found": "Sorry, we don't have a user with that id."}),
-            404,
-        )

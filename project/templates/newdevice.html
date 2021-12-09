@@ -1,27 +1,9 @@
 {% extends "base.html" %}
-
 {% block content %}
-
-<div class="wrapper">
-
-  <!-- Sidebar -->
-  <nav id="sidebar">
-    <div class="custom-menu">
-      <button type="button" id="sidebarCollapse" class="btn btn-primary">
-        <i class="bi bi-list"></i>
-        <span class="sr-only">Toggle Menu</span>
-      </button>
-    </div>
-    {% include "sidebar.html" %}
-  </nav>
-
-  <!-- Page Content -->
-  <br>
-
-
-  <br>
-  <div id="content-manage">
-    <div class="card mx-auto" style="max-width: 30rem;">
+<!-- New device form -->
+<div class="d-flex justify-content-center">
+  <div class="single-cont-center flex-fill">
+    <div class="card mt-3">
       <div class="card-header text-white text-center">
         <strong>New Device</strong>
       </div>
@@ -29,58 +11,51 @@
         <form method="POST" action="/new-dev">
           {{ form.csrf_token }}
           <div class="form-group">
-            <label>{{form.name.label}}</label>
+            {{form.name.label(class='mb-0')}}
             {{ form.name(class='form-control', placeholder='Device Name') }}
           </div>
           <div class="form-group">
-            <label>{{form.dev_type.label}}</label>
+            {{form.dev_type.label(class='mb-0')}}
             {{ form.dev_type(class='form-control') }}
           </div>
           <div class="form-group">
-            <label>{{form.di.label}}</label>
+            {{form.di.label(class='mb-0')}}
             {{ form.di(class='form-control', type='number') }}
           </div>
           <div class="form-group">
-            <label>{{form.ai.label}}</label>
+            {{form.ai.label(class='mb-0')}}
             {{ form.ai(class='form-control', type='number') }}
           </div>
           <div class="form-group">
-            <label>{{form.ui.label}}</label>
+            {{form.ui.label(class='mb-0')}}
             {{ form.ui(class='form-control', type='number') }}
           </div>
           <div class="form-group">
-            <label>{{form.do.label}}</label>
+            {{form.do.label(class='mb-0')}}
             {{ form.do(class='form-control', type='number') }}
           </div>
           <div class="form-group">
-            <label>{{form.ao.label}}</label>
+            {{form.ao.label(class='mb-0')}}
             {{ form.ao(class='form-control', type='number') }}
           </div>
           <div class="form-group">
-            <label>{{form.co.label}}</label>
+            {{form.co.label(class='mb-0')}}
             {{ form.co(class='form-control', type='number') }}
           </div>
           <div class="form-group">
-            <label>{{form.has_clock.label}}</label>
+            {{form.has_clock.label(class='mb-0')}}
             {{ form.has_clock(class='form-control') }}
           </div>
           <div class="form-group">
-            <label>{{form.price.label}}</label>
+            {{form.price.label(class='mb-0')}}
             {{ form.price(class='form-control') }}
           </div>
           <div class="float-right">
             {{ form.submit(class='btn btn-success') }}
           </div>
         </form>
-
       </div>
     </div>
-
   </div>
-  <!-- We'll fill this with dummy content -->
-  <p>Report your issues to the following email: {{info_email}}</p>
 </div>
-
-<script src="/static/sidebar.js" defer></script>
-
 {% endblock %}

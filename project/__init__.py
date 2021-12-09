@@ -41,6 +41,11 @@ def create_app(config_file="config.py"):
 
     app.register_blueprint(main_blueprint)
 
+    # blueprint for api-like parts of app
+    from .prj_api import prj_api as api_blueprint
+
+    app.register_blueprint(api_blueprint)
+
     return app
 
 
