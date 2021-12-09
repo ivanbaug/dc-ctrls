@@ -1,7 +1,7 @@
 import os
-from project.models import Device
+from project.models import Device, User
 from project.forms import NewDeviceForm
-from flask import Blueprint, redirect, render_template, request, url_for, flash
+from flask import Blueprint, redirect, render_template, request, url_for, jsonify, flash
 from flask_login import login_required, current_user
 from datetime import datetime
 from pytz import timezone
@@ -49,7 +49,6 @@ def profile():
 def manage_devices():
     devices = Device.query.all()
     # devices = []
-
     return render_template("managedevices.html", info_email=INFO_EMAIL, devices=devices)
 
 
@@ -102,3 +101,19 @@ def delete_device(device_id):
     db.session.delete(device_to_delete)
     db.session.commit()
     return redirect(url_for("main.manage_devices"))
+
+
+# TODO: make this available for privileged users only
+@main.route("/toggle-price-display", methods=["PATCH"])
+@login_required
+def toggle_price():
+    user = User.query.get(current_user.id)
+    if user:
+        user.show_prices = not user.show_prices
+        db.session.commit()
+        return jsonify(response={"success": "Sucessfully updated price display."}), 200
+    else:
+        return (
+            jsonify(error={"Not Found": "Sorry, we don't have a user with that id."}),
+            404,
+        )

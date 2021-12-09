@@ -17,6 +17,33 @@ html {
   background-color: #19334d;
 }
 
+.navbar .dropdown-menu,
+.dropdown-divider {
+  background-color: #19334d;
+  border-color: #152b41ce;
+}
+
+/* and this styles the dropdwon trigger link, when open */
+.navbar .dropdown.show a {
+  background-color: #19334d;
+  color: #ddd;
+}
+
+.navbar .dropdown.show a:hover {
+  background-color: #2e4863;
+  color: #ddd;
+}
+
+.navbar .dropdown.show #price-switch {
+  background-color: #19334d;
+  color: #ddd;
+}
+
+.navbar .dropdown.show #price-switch:hover {
+  background-color: #2e4863;
+  color: #ddd;
+}
+
 /* general container */
 .container-level1 {
   flex-grow: 1;
