@@ -59,7 +59,6 @@ def add_device():
     new_device_form = NewDeviceForm()
     # TODO:handle devices with same name
     if new_device_form.validate_on_submit():
-
         print("this was a post request")
         new_device = Device(
             name=new_device_form.name.data,
@@ -95,10 +94,10 @@ def about():
     return render_template("about.html", info_email=INFO_EMAIL)
 
 
-@main.route("/delete/<int:device_id>")
-@login_required
-def delete_device(device_id):
-    device_to_delete = Device.query.get(device_id)
-    db.session.delete(device_to_delete)
-    db.session.commit()
-    return redirect(url_for("main.manage_devices"))
+# @main.route("/delete/<int:device_id>")
+# @login_required
+# def delete_device(device_id):
+#     device_to_delete = Device.query.get(device_id)
+#     db.session.delete(device_to_delete)
+#     db.session.commit()
+#     return redirect(url_for("main.manage_devices"))

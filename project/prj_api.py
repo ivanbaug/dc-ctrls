@@ -2,7 +2,7 @@ from flask import Blueprint, jsonify
 from flask_login import login_required, current_user
 
 from . import db
-from .models import User
+from .models import User, Device
 
 prj_api = Blueprint("prj_api", __name__)
 
@@ -23,5 +23,23 @@ def toggle_price():
     else:
         return (
             jsonify(error={"Not Found": "Sorry, wrong user or id."}),
+            404,
+        )
+
+
+@prj_api.route("/delete-device/<int:device_id>", methods=["DELETE"])
+@login_required
+def delete_device(device_id: int):
+    device = Device.query.get(device_id)
+    if device:
+        db.session.delete(device)
+        db.session.commit()
+        return (
+            jsonify(response={"Success": f"Sucessfully deleted {device.name}."}),
+            200,
+        )
+    else:
+        return (
+            jsonify(error={"Not Found": "The device was not found in the db."}),
             404,
         )
