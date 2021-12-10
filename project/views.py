@@ -4,14 +4,12 @@ from project.forms import NewDeviceForm
 from flask import Blueprint, redirect, render_template, request, url_for, jsonify, flash
 from flask_login import login_required, current_user
 from datetime import datetime
-from pytz import timezone
 from . import db
 from .prj_requests import select_from_all
 
 main = Blueprint("main", __name__)
 
-# TODO: Improve timezone handling
-tz = timezone("America/Lima")
+
 INFO_EMAIL = os.environ.get("INFO_EMAIL")
 
 
@@ -48,8 +46,8 @@ def profile():
 @main.route("/man-dev", methods=["GET", "POST"])
 @login_required
 def manage_devices():
-    devices = Device.query.all()
-    # devices = []
+    # Display ascending order first by type then by name
+    devices = Device.query.order_by(Device.dev_type.asc(), Device.name.asc())
     return render_template("managedevices.html", info_email=INFO_EMAIL, devices=devices)
 
 
@@ -73,8 +71,8 @@ def add_device():
             co=new_device_form.co.data,
             has_clock=new_device_form.has_clock.data,
             price=new_device_form.price.data,
-            date_created=datetime.now(tz=tz),
-            date_modified=datetime.now(tz=tz),
+            date_created=datetime.utcnow(),
+            date_modified=datetime.utcnow(),
             user_created=current_user.name,
             user_modified=current_user.name,
         )
@@ -107,15 +105,15 @@ def edit_device(dev_id):
         price=device.price,
     )
 
-    if edit_form.is_submitted():
-        print("submitted")
-        print(edit_form.errors)
+    # if edit_form.is_submitted():
+    #     print("submitted")
+    #     print(edit_form.errors)
 
-    if edit_form.validate():
-        print("valid")
+    # if edit_form.validate():
+    #     print("valid")
 
     if edit_form.validate_on_submit():
-        print("Validated submission")
+        # print("Validated submission")
         device.dev_type = edit_form.dev_type.data
         device.di = edit_form.di.data
         device.ai = edit_form.ai.data
@@ -126,10 +124,10 @@ def edit_device(dev_id):
         device.has_clock = edit_form.has_clock.data
         device.price = edit_form.price.data
         device.user_modified = current_user.name
-        device.date_modified = datetime.now(tz=tz)
-        print("trying to commit changes")
+        device.date_modified = datetime.utcnow()
+        # print("trying to commit changes")
         db.session.commit()
-        print("Done, yay")
+        # print("Done, yay")
         return redirect(url_for("main.manage_devices"))
 
     return render_template(

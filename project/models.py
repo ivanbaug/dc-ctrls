@@ -15,7 +15,7 @@ class User(UserMixin, db.Model):
     show_prices = db.Column(db.Boolean, default=False)
     device_options = db.Column(JSON)
     has_privileges = db.Column(db.Boolean, default=False)
-    registration_date = db.Column(db.DateTime, default=datetime.now)
+    registration_date = db.Column(db.DateTime, default=datetime.utcnow)
 
 
 class Device(db.Model):
