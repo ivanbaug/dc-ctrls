@@ -1,9 +1,8 @@
 const price_switch = document.getElementById("cPriceSwitch");
-// const current_url= window.location.host ;
+
 
 price_switch.addEventListener('change', togglePriceDisplay)
 function togglePriceDisplay(){
-
   if (price_switch.checked){
     console.log('toggle price display on')
   }

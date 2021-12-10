@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Edit device form -->
+<div class="d-flex justify-content-center">
+  <div class="single-cont-center flex-fill">
+    <div class="card mt-3">
+      <div class="card-header text-white text-center">
+        <strong>Edit "{{dev_name}}"</strong>
+      </div>
+      <div class="card-body">
+        <form method="POST" action="/edit-device/{{dev_id}}">
+          {{ form.csrf_token }}
+          <div class="form-group d-none">
+            {{form.name.label(class='mb-0')}}
+            {{ form.name(class='form-control', placeholder='Device Name') }}
+          </div>
+          <div class="form-group">
+            {{form.dev_type.label(class='mb-0')}}
+            {{ form.dev_type(class='form-control') }}
+          </div>
+          <div class="form-group">
+            {{form.di.label(class='mb-0')}}
+            {{ form.di(class='form-control', type='number') }}
+          </div>
+          <div class="form-group">
+            {{form.ai.label(class='mb-0')}}
+            {{ form.ai(class='form-control', type='number') }}
+          </div>
+          <div class="form-group">
+            {{form.ui.label(class='mb-0')}}
+            {{ form.ui(class='form-control', type='number') }}
+          </div>
+          <div class="form-group">
+            {{form.do.label(class='mb-0')}}
+            {{ form.do(class='form-control', type='number') }}
+          </div>
+          <div class="form-group">
+            {{form.ao.label(class='mb-0')}}
+            {{ form.ao(class='form-control', type='number') }}
+          </div>
+          <div class="form-group">
+            {{form.co.label(class='mb-0')}}
+            {{ form.co(class='form-control', type='number') }}
+          </div>
+          <div class="form-group">
+            {{form.has_clock.label(class='mb-0')}}
+            {{form.has_clock(class='form-control') }}
+          </div>
+          <div class="form-group">
+            {{form.price.label(class='mb-0')}}
+            {{ form.price(class='form-control') }}
+          </div>
+          <div class="float-right">
+            {{ form.submit(class='btn btn-success', value='Save changes') }}
+          </div>
+        </form>
+      </div>
+      <div class="card-footer text-muted">
+        <p class="my-0"><em>{{dev_name}}</em></p>
+        <p class="my-0"><em>Created on {{created_date}} by {{created_by}}</em></p>
+        <p class="my-0"><em>Modified on {{modified_date}} by {{modified_by}}</em></p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

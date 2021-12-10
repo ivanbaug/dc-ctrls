@@ -57,6 +57,8 @@ def manage_devices():
 @login_required
 def add_device():
     new_device_form = NewDeviceForm()
+    if new_device_form.errors:
+        print(new_device_form.errors)
     # TODO:handle devices with same name
     if new_device_form.validate_on_submit():
         print("this was a post request")
@@ -76,15 +78,69 @@ def add_device():
             user_created=current_user.name,
             user_modified=current_user.name,
         )
-        print("generated new device, trying to add")
+        # print("generated new device, trying to add")
         # print('trying to create a new device')
         db.session.add(new_device)
         db.session.commit()
-        print("this should be enough, it should have committed")
+        # print("this should be enough, it should have committed")
         return redirect(url_for("main.manage_devices"))
-    print("this was a get request")
+    # print("this was a get request")
     return render_template(
         "newdevice.html", info_email=INFO_EMAIL, form=new_device_form
+    )
+
+
+@main.route("/edit-device/<int:dev_id>", methods=["GET", "POST"])
+@login_required
+def edit_device(dev_id):
+    device = Device.query.get(dev_id)
+    edit_form = NewDeviceForm(
+        name=device.name,
+        dev_type=device.dev_type,
+        di=device.di,
+        ai=device.ai,
+        ui=device.ui,
+        do=device.do,
+        ao=device.ao,
+        co=device.co,
+        has_clock=str(device.has_clock),
+        price=device.price,
+    )
+
+    if edit_form.is_submitted():
+        print("submitted")
+        print(edit_form.errors)
+
+    if edit_form.validate():
+        print("valid")
+
+    if edit_form.validate_on_submit():
+        print("Validated submission")
+        device.dev_type = edit_form.dev_type.data
+        device.di = edit_form.di.data
+        device.ai = edit_form.ai.data
+        device.ui = edit_form.ui.data
+        device.do = edit_form.do.data
+        device.ao = edit_form.ao.data
+        device.co = edit_form.co.data
+        device.has_clock = edit_form.has_clock.data
+        device.price = edit_form.price.data
+        device.user_modified = current_user.name
+        device.date_modified = datetime.now(tz=tz)
+        print("trying to commit changes")
+        db.session.commit()
+        print("Done, yay")
+        return redirect(url_for("main.manage_devices"))
+
+    return render_template(
+        "editdevice.html",
+        form=edit_form,
+        dev_id=dev_id,
+        dev_name=device.name.upper(),
+        created_date=device.date_created.strftime("%Y/%m/%d %H:%M"),
+        created_by=device.user_created,
+        modified_date=device.date_modified.strftime("%Y/%m/%d %H:%M"),
+        modified_by=device.user_modified,
     )
 
 

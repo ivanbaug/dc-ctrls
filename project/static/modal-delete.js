@@ -18,15 +18,6 @@ $('#modalDelete').on('show.bs.modal', function(e) {
         console.log(error)
       }
     });
-    // fetch("/delete-device/"+deviceId, {method:'DELETE'})
-    // .then(response => response.json())
-    // .then(data => {
-    //   console.log('Success:', data);
-    // })
-    // .catch((error) => {
-    //   console.error('Error:', error);
-    // });
-    $('#modalDelete').modal('toggle');   
   });
 });
 

@@ -28,7 +28,7 @@ def login():
         # if the above check passes, then we know the user has the right credentials
         remember = login_form.remember.data
         login_user(user, remember=remember)
-        return redirect(url_for("main.profile"))
+        return redirect(url_for("main.index"))
     return render_template("login.html", form=login_form)
 
 
