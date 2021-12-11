@@ -57,10 +57,13 @@
       </div>
       <div class="card-footer text-muted">
         <p class="my-0"><em>{{dev_name}}</em></p>
-        <p class="my-0"><em>Created on {{created_date}} by {{created_by}}</em></p>
-        <p class="my-0"><em>Modified on {{modified_date}} by {{modified_by}}</em></p>
+        <p class="my-0"><em>Created on <span id="date-created">{{created_date}}</span> by {{created_by}}</em></p>
+        <p class="my-0"><em>Modified on <span id="date-modified">{{modified_date}}</span> by {{modified_by}}</em></p>
       </div>
     </div>
   </div>
 </div>
 {% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static',filename='date-to-local.js') }}"></script>
+{% endblock scripts%}

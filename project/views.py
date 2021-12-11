@@ -135,9 +135,9 @@ def edit_device(dev_id):
         form=edit_form,
         dev_id=dev_id,
         dev_name=device.name.upper(),
-        created_date=device.date_created.strftime("%Y/%m/%d %H:%M"),
+        created_date=device.date_created.replace(microsecond=0).isoformat(),
         created_by=device.user_created,
-        modified_date=device.date_modified.strftime("%Y/%m/%d %H:%M"),
+        modified_date=device.date_modified.replace(microsecond=0).isoformat(),
         modified_by=device.user_modified,
     )
 
