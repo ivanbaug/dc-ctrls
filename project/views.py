@@ -24,8 +24,36 @@ def index():
             req_ao = int(request.form["ao"])
         except Exception as e:
             msg = "One or more of your inputs are not a number between 0 and 128"
+            flash(msg)
         else:
-            selected = select_from_all(req_di, req_ai, req_do, req_ao)
+            devices = Device.query.order_by(Device.dev_type.asc(), Device.name.asc())
+
+            if not next(item for item in devices if item.dev_type == "controller"):
+                msg = "There are no CONTROLLERS available for use in the database, register to use your personal selection of devices."
+                flash(msg)
+                return render_template("index.html")
+
+            # Get list of devices to evaluate
+            if current_user.is_authenticated:
+                user = User.query.get(current_user.id)
+                user_device_options = update_user_dev_options(
+                    devices, user.device_options
+                )
+                d2u = [
+                    d["name"]
+                    for d in user_device_options["devices"]
+                    if d["select_user"]
+                ]
+
+                dquery = Device.query.filter(Device.name.in_(d2u)).order_by(
+                    Device.dev_type.asc(), Device.name.asc()
+                )
+                devices_to_use = [d.to_dict() for d in dquery]
+
+            else:
+                devices_to_use = [d.to_dict() for d in devices if d.is_default]
+
+            selected = select_from_all(req_di, req_ai, req_do, req_ao, devices_to_use)
             return render_template(
                 "index.html",
                 selected=selected,
@@ -154,6 +182,19 @@ def edit_device(dev_id):
 @login_required
 def about():
     return render_template("about.html", info_email=INFO_EMAIL)
+
+
+@main.route("/test", methods=["GET"])
+def my_test():
+    ln = ["SNC25151", "PCX1711", "F4CGM", "SNC16121", "jajaja"]
+
+    query = Device.query.filter(Device.name.in_(ln)).order_by(
+        Device.dev_type.asc(), Device.name.asc()
+    )
+
+    for d in query:
+        print(d.to_dict())
+    return "you called?"
 
 
 # @main.route("/delete/<int:device_id>")

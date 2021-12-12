@@ -8,6 +8,7 @@ from dotenv import load_dotenv
 from . import db
 from .models import Device
 from datetime import datetime
+from typing import List
 from flask_login import current_user
 
 # HELPER FUNCTIONS FOR THE PROJECT
@@ -20,12 +21,22 @@ with open("project\\test.json", "r") as f:
     devices_data = json.load(f)
 
 
-def select_from_all(di: int = 0, ai: int = 0, do: int = 0, ao: int = 0):
+def select_from_all(
+    di: int = 0, ai: int = 0, do: int = 0, ao: int = 0, d2u: List[dict] = []
+):
     try:
         response = requests.post(
             f"{API_SELECT_URL}/dcCtrlSelect",
             headers={"Content-Type": "application/json"},
-            data=json.dumps({"di": di, "ai": ai, "do": do, "ao": ao}),
+            data=json.dumps(
+                {
+                    "di": di,
+                    "ai": ai,
+                    "do": do,
+                    "ao": ao,
+                    'devices':d2u,
+                }
+            ),
         )
         # If the response was successful, no Exception will be raised
         response.raise_for_status()

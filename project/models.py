@@ -33,7 +33,19 @@ class Device(db.Model):
     price = db.Column(db.Float)
     date_created = db.Column(db.DateTime)
     date_modified = db.Column(db.DateTime)
-    # TODO: Create relation with the user that created it, may not be neccesary
     user_created = db.Column(db.String(250))
     user_modified = db.Column(db.String(250))
     is_default = db.Column(db.Boolean, default=True)
+
+    def to_dict(self):
+        return {
+            "name": self.name,
+            "di": self.di,
+            "ai": self.ai,
+            "ui": self.ui,
+            "do": self.do,
+            "ao": self.ao,
+            "co": self.co,
+            "price": self.price,
+            "is_controller": True if self.dev_type == "controller" else False,
+        }
