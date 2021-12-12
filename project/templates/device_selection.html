@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="d-flex justify-content-center">
+  <div class="single-cont-center flex-fill">
+    <h4 class="py-2">Device preference list</h4>
+    {% if not devices %}
+    <hr>
+    <h4>There are no devices registered yet</h4>
+    {% else %}
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col" class="text-center">Device</th>
+          <th scope="col" class="text-center">Personal</th>
+          <th scope="col" class="text-center">Global</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for d in devices %}
+        <tr>
+          <th scope="row">{{d['name']}}</th>
+          <td>
+            <!-- User preference -->
+            <div class="custom-control custom-switch">
+              <form class="text-center">
+                {% if d['select_user'] %}
+                <input type="checkbox" checked class="custom-control-input switch-device-user" id="user_{{d['name']}}">
+                {% else %}
+                <input type="checkbox" class="custom-control-input switch-device-user" id="user_{{d['name']}}">
+                {% endif %}
+                <label class="custom-control-label mx-0" for="user_{{d['name']}}"></label>
+              </form>
+            </div>
+          </td>
+          <td>
+            <!-- Default/global preference -->
+            <div class="custom-control custom-switch">
+              <form class="text-center">
+                {% if d['select_default'] %}
+                <input type="checkbox" checked class="custom-control-input switch-device-global"
+                  id="global_{{d['name']}}">
+                {% else %}
+                <input type="checkbox" class="custom-control-input switch-device-global" id="global_{{d['name']}}">
+                {% endif %}
+                <label class="custom-control-label mx-0" for="global_{{d['name']}}"></label>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static',filename='toggle-device-global.js') }}"></script>
+<script src="{{ url_for('static',filename='toggle-device-user.js') }}"></script>
+{% endblock scripts %}

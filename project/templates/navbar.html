@@ -30,11 +30,11 @@
           <a class="dropdown-item" href="{{url_for('main.add_device')}}">New Device</a>
           <a class="dropdown-item" href="{{url_for('main.manage_devices')}}">Manage devices</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#">Default devices</a>
+          <a class="dropdown-item" href="{{ url_for('main.device_preferences') }}">Enable/disable devices</a>
         </div>
       </li>
       <li class="nav-item">
-        <a class="nav-link d-flex align-items-center" href="{{ url_for('main.profile') }}">
+        <a class="nav-link d-flex align-items-center" href="{{ url_for('main.device_preferences') }}">
           <i class="bi bi-person-circle" style="font-size: 1.3rem; color: rgb(216, 216, 216);"></i>
           <div class="ml-2">{{current_user.name}}'s Profile</div>
         </a>

@@ -3,9 +3,10 @@ from project.models import Device, User
 from project.forms import NewDeviceForm
 from flask import Blueprint, redirect, render_template, request, url_for, jsonify, flash
 from flask_login import login_required, current_user
+from sqlalchemy.orm.attributes import flag_modified
 from datetime import datetime
 from . import db
-from .prj_requests import select_from_all
+from .prj_helper import select_from_all, update_user_dev_options
 
 main = Blueprint("main", __name__)
 
@@ -37,10 +38,17 @@ def index():
     return render_template("index.html")
 
 
-@main.route("/profile")
+@main.route("/device_preferences")
 @login_required
-def profile():
-    return render_template("profile.html")
+def device_preferences():
+    devices = Device.query.order_by(Device.dev_type.asc(), Device.name.asc())
+    user = User.query.get(current_user.id)
+    user.device_options = update_user_dev_options(devices, user.device_options)
+    flag_modified(user, "device_options")
+    db.session.commit()
+    return render_template(
+        "device_selection.html", devices=user.device_options["devices"]
+    )
 
 
 @main.route("/man-dev", methods=["GET", "POST"])
@@ -59,7 +67,7 @@ def add_device():
         print(new_device_form.errors)
     # TODO:handle devices with same name
     if new_device_form.validate_on_submit():
-        print("this was a post request")
+        # print("this was a post request")
         new_device = Device(
             name=new_device_form.name.data,
             dev_type=new_device_form.dev_type.data,

@@ -1,9 +1,16 @@
 import os
 import requests, json
-from typing import Tuple
+from typing import List, Tuple
 from requests.exceptions import HTTPError
 from dotenv import load_dotenv
 
+# Temporarily while uploading the db data
+from . import db
+from .models import Device
+from datetime import datetime
+from flask_login import current_user
+
+# HELPER FUNCTIONS FOR THE PROJECT
 
 load_dotenv(".env")
 API_SELECT_URL = os.environ.get("API_SELECT_URL")
@@ -31,6 +38,7 @@ def select_from_all(di: int = 0, ai: int = 0, do: int = 0, ao: int = 0):
         selected = response.json()["results"]
         # for s in selected:
         #     print(s["name"])
+        # load_to_db()
         return list_possible_ctrls(req, selected, devices_data)
 
 
@@ -105,7 +113,6 @@ def list_possible_ctrls(req, ctrl_sol_list, ddata):
     ctrl_sol_list : list of controller selections
     ddata : general list of available controller objects
     """
-
     main_list = []
     ctrls = ddata["ctrls"]
     exs = ddata["exps"]
@@ -164,6 +171,75 @@ def list_possible_ctrls(req, ctrl_sol_list, ddata):
         main_list.append(option_dict)
 
     return main_list
+
+
+def load_to_db():
+    ctrls = devices_data["ctrls"]
+    exs = devices_data["exps"]
+    for c in ctrls:
+        new_device = Device(
+            name=c["name"],
+            dev_type="controller",
+            di=c["di"],
+            ai=c["ai"],
+            ui=c["ui"],
+            do=c["do"],
+            ao=c["ao"],
+            co=c["co"],
+            has_clock=c["clock"],
+            price=c["cost"],
+            date_created=datetime.utcnow(),
+            date_modified=datetime.utcnow(),
+            user_created=current_user.name,
+            user_modified=current_user.name,
+        )
+        db.session.add(new_device)
+    for c in exs:
+        new_device = Device(
+            name=c["name"],
+            dev_type="expansion",
+            di=c["di"],
+            ai=c["ai"],
+            ui=c["ui"],
+            do=c["do"],
+            ao=c["ao"],
+            co=c["co"],
+            has_clock=c["clock"],
+            price=c["cost"],
+            date_created=datetime.utcnow(),
+            date_modified=datetime.utcnow(),
+            user_created=current_user.name,
+            user_modified=current_user.name,
+        )
+        db.session.add(new_device)
+        print("trying to commit bulk")
+    db.session.commit()
+
+
+def update_user_dev_options(devices: List[Device], user_opt: dict) -> dict:
+    if user_opt:
+        #  Using a clean list will delete devices that do not exist anymore
+        new_devices = []
+        udevs = user_opt["devices"]
+        for d in devices:
+            device_found = next(item for item in udevs if item["name"] == d.name)
+            if device_found:
+                # Update only the defaults
+                device_found["select_default"] = d.is_default
+                new_devices.append(device_found)
+        user_opt["devices"] = new_devices
+    else:
+        # first time user accesses his options
+        new_devices = []
+        for d in devices:
+            mdevice = {
+                "name": d.name,
+                "select_user": d.is_default,
+                "select_default": d.is_default,
+            }
+            new_devices.append(mdevice)
+        user_opt["devices"] = new_devices
+    return user_opt
 
 
 # print(devices_data['ctrls'][0])
