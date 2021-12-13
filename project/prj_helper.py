@@ -24,6 +24,7 @@ with open("project\\test.json", "r") as f:
 def select_from_all(
     di: int = 0, ai: int = 0, do: int = 0, ao: int = 0, d2u: List[dict] = []
 ):
+    # TODO: possible bug: what of there are no controllers or an empry list
     try:
         response = requests.post(
             f"{API_SELECT_URL}/dcCtrlSelect",
@@ -34,7 +35,7 @@ def select_from_all(
                     "ai": ai,
                     "do": do,
                     "ao": ao,
-                    'devices':d2u,
+                    "devices": d2u,
                 }
             ),
         )
@@ -50,7 +51,7 @@ def select_from_all(
         # for s in selected:
         #     print(s["name"])
         # load_to_db()
-        return list_possible_ctrls(req, selected, devices_data)
+        return list_possible_ctrls(req, selected, d2u)
 
 
 def prove_io(required: int, base: int, universal: int) -> Tuple:
@@ -125,8 +126,13 @@ def list_possible_ctrls(req, ctrl_sol_list, ddata):
     ddata : general list of available controller objects
     """
     main_list = []
-    ctrls = ddata["ctrls"]
-    exs = ddata["exps"]
+    ctrls = []
+    exs = []
+    for d in ddata:
+        if d["is_controller"]:
+            ctrls.append(d)
+        else:
+            exs.append(d)
 
     print("listing possible ctrls")
     for c in ctrl_sol_list:

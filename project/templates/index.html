@@ -52,7 +52,6 @@
     <div class="alert alert-primary sticky-top" role="alert">
       Results for: {{req_di}} di | {{req_ai}} ai | {{req_do}} do | {{req_ao}} ao
     </div>
-    {% endif %}
     {% for sel in selected %}
     <table class="table table-sm table-bordered mt-3 text-center">
       <tr class="table-head-custom-bg">
@@ -80,6 +79,7 @@
       {% endif %}
     </table>
     {% endfor %}
+    {% endif %}
   </div>
 </div>
 {% endblock %}
