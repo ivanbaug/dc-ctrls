@@ -1,7 +1,7 @@
 # dc-ctrls
 
 Current working version:
-[http://w05-ctrlpoints.appspot.com/](http://w05-ctrlpoints.appspot.com/)
+[https://dc-ctrls-jdm27gv2nq-uc.a.run.app/](https://dc-ctrls-jdm27gv2nq-uc.a.run.app/)
 
 
 App to calculate ctrls

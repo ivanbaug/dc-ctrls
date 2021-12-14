@@ -1,0 +1,7 @@
+steps:
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'gcr.io/dvc-apps/github.com/ivanbaug/dc-ctrls:$COMMIT_SHA', '.']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/dvc-apps/github.com/ivanbaug/dc-ctrls:$COMMIT_SHA']
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'dc-ctrls', '--region=us-east1', '--platform=managed','--image=gcr.io/dvc-apps/github.com/ivanbaug/dc-ctrls:$COMMIT_SHA']
