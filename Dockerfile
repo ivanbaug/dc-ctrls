@@ -11,6 +11,11 @@ WORKDIR $APP_HOME
 COPY . ./
 
 # Install production dependencies.
+RUN apt-get update \
+    && apt-get -y install libpq-dev gcc \
+    && pip install --no-cache-dir psycopg2 \
+    && apt-get remove -y gcc && apt-get -y autoremove \
+    && apt-get clean
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Run the web service on container startup. Here we use the gunicorn
