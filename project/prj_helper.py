@@ -16,10 +16,6 @@ from flask_login import current_user
 load_dotenv(".env")
 API_SELECT_URL = os.environ.get("API_SELECT_URL")
 
-# TODO: This will become a DB search
-with open("project\\test.json", "r") as f:
-    devices_data = json.load(f)
-
 
 def select_from_all(
     di: int = 0, ai: int = 0, do: int = 0, ao: int = 0, d2u: List[dict] = []
@@ -191,6 +187,8 @@ def list_possible_ctrls(req, ctrl_sol_list, ddata):
 
 
 def load_to_db():
+    with open("project\\test.json", "r") as f:
+        devices_data = json.load(f)
     ctrls = devices_data["ctrls"]
     exs = devices_data["exps"]
     for c in ctrls:
