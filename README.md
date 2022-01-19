@@ -3,7 +3,7 @@
 App to calculate combinations of controllers and expansion modules.
 
 ## Current working version:
-[https://dc-ctrls-jdm27gv2nq-ue.a.run.app/](https://dc-ctrls-jdm27gv2nq-ue.a.run.app/)
+Online : [https://dc-ctrls-jdm27gv2nq-ue.a.run.app/](https://dc-ctrls-jdm27gv2nq-ue.a.run.app/)
 
 [Video demo ](https://www.youtube.com/watch?v=Lx3pcx_eavk)
 
